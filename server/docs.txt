@@ -1,0 +1,23 @@
+host: https://najlepszawgalaktyce.000webhostapp.com/chat
+
+1. Upload message, POST
+   .../index.php
+
+   Parameter    value    requested
+   send         True     Yes
+   text         String   Yes
+
+   Response type: String
+
+   Case         Status   Message
+   Uploaded     Success  Message uploaded
+   Exception    Error    Exception message
+
+2. Read messages, GET
+   .../chat.json
+
+   Parameter    value    requested
+   None
+
+   Response type: (JSON) List[String]
+
