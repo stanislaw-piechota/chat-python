@@ -90,7 +90,7 @@ def resize_x(root, event):
     x_win = root.winfo_x()
     difference = (event.x_root - x_win) - root.winfo_width()
 
-    if root.winfo_width() > 650:
+    if root.winfo_width() > 850:
         try:
             root.geometry(f"{ root.winfo_width() + difference }x{ root.winfo_height() }")
         except Exception as e:
@@ -109,7 +109,7 @@ def resize_y(root, event):
     y_win = root.winfo_y()
     difference = (event.y_root - y_win) - root.winfo_height()
 
-    if root.winfo_height() > 350:
+    if root.winfo_height() > 550:
         try:
             root.geometry(f"{ root.winfo_width()  }x{ root.winfo_height() + difference}")
         except Exception as e:
