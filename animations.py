@@ -7,7 +7,7 @@ add = 1
 def users_nav_off(nav, chat, root, count):
     global add
 
-    x, max_x = nav.winfo_x(), root.winfo_width()
+    x, max_x = nav.winfo_x(), root.winfo_width()  # - root.children['!frame2'].children['!frame2'].winfo_width()
     chat_width = chat.winfo_width()
 
     if count >= 8:
