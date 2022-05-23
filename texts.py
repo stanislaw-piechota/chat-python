@@ -130,5 +130,6 @@ slurs = ['chuj','chuja', 'chujek', 'chuju', 'chujem', 'chujnia',
 'zapierniczający', 'zasrać', 'zasranym', 'zasrywać', 'zasrywający',
 'zesrywać', 'zesrywający', 'zjebać', 'zjebac', 'zjebał', 'zjebal',
 'zjebała', 'zjebala', 'zjebana', 'zjebią', 'zjebali', 'zjeby']
-link_starts = ("https://", "http://", "www.")
-link_ends = (".com", ".pl")
+link_starts = ("https://", "http://", "www")
+link_ends = ("com", "pl")
+symbols = (' ', ',', '.', '?', '!')
