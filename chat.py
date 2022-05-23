@@ -80,7 +80,7 @@ users_button.place(relx=0.86, rely=0.02, relwidth=0.13, relheight=0.06)
 
 
 # binding enter to message sending
-root.bind('<Return>', lambda event: net.ex_handle(net.send_to_server, (text_field, )))
+root.bind('<Return>', lambda event: net.ex_handle(net.send_to_server, text_field))
 messages_thread = Thread(target=net.messages_thread, args=(root, ))
 messages_thread.start()
 
