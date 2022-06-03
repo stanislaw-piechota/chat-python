@@ -1,23 +1,87 @@
 host: https://najlepszawgalaktyce.000webhostapp.com/chat
 
 1. Upload message, POST
-   .../index.php
+   .../
 
    Parameter    value    requested
    send         True     Yes
+   room         String   Yes
    text         String   Yes
+   username     String   Yes
 
-   Response type: String
+   Response type: (JSONable String)
 
    Case         Status   Message
    Uploaded     Success  Message uploaded
+   Wrong room   Error    Room does not exist
    Exception    Error    Exception message
 
 2. Read messages, GET
-   .../chat.json
+   .../chats.json
 
    Parameter    value    requested
    None
 
-   Response type: (JSON) List[String]
+   Response type: (JSON) List[Rooms[Messages[message, author, time]]]
 
+3. Register, POST
+   .../
+
+   Parameter    value    requested
+   register     True     Yes
+   username     String   Yes
+   password     String   Yes
+
+   Response type: (JSONable String)
+
+   Case         Status   Message
+   Registered   Success  Registered
+   Lacking data None     
+   Exception    None
+   Login used   Error    Username already exists
+
+4. Login, POST
+   .../
+
+   Parameter    value    requested
+   login        True     Yes
+   username     String   Yes
+   password     String   Yes
+
+   Response type: (JSONable String) List[String rooms_names]
+
+   Case         Status   Message
+   Logged       Success  List[Rooms]
+   Wrong pass   Error    Password does not match
+   Wrong login  Error    Username does not exist
+   Lacking data None
+
+5. Creating room, GET
+   .../
+
+   Parameter    value    requested
+   create       True     Yes
+   name         String   Yes
+
+   Response type: (JSONable String)
+
+   Case         Status   Message
+   Created      Success  Room created
+   Name used    Error    Room already exist
+   Exception    None
+
+6. Joining room, GET
+   .../
+
+   Parameter    value    requested
+   join         True     Yes
+   username     String   Yes
+   room         String   Yes
+
+   Response type: (JSONable String)
+
+   Case         Status   Message
+   Joined       Success  Joined this room
+   Wrong login  Error    Username does not exist
+   Wrong room   Error    Room does not exist
+   Exception    None
