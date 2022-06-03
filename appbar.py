@@ -3,7 +3,7 @@
 from ctypes import windll
 from functools import partial
 CL = ['#C4C4C4', '#494C57', '#41444C', '#35383E', '#D5D5D5']
-
+#szary,ciemno-szaro-granatowy,prawie ten sam co poprzedni,trochę bardziej ciemny,szaro-biały
 
 def config_window(root):
     # Necessary attributes to make appbar work
