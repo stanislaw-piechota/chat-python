@@ -1,8 +1,9 @@
 from tkinter import END
 from texts import slurs, link_starts, link_ends, symbols
 
-all_symbols = symbols + ['.']
+all_symbols = symbols + ['/', '.']
 symbols_n = len(symbols)
+all_symbols_n = len(all_symbols)
 
 
 def message_check(entry):
@@ -14,7 +15,7 @@ def message_check(entry):
 
 
 def ignore_symbols(i, message):
-    if i > symbols_n:
+    if i == all_symbols_n:
         return slurs_check(message)
     else:
         if i == symbols_n:
