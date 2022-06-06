@@ -11,6 +11,7 @@ CL = ab.CL
 
 # main window
 root = Tk()
+root.messages = []
 ab.config_window(root)
 
 
