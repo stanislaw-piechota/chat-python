@@ -246,9 +246,9 @@ nick = Entry(klatkaAnon, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='cente
 pRejestracja = Button(klatkaAnon, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=register)
 pRejestracja.place(relx=0.1, rely=0.5, relwidth=0.8, relheight=0.2)
 pLogin = Button(klatkaAnon, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=Logowanie).place(relx=0.1, rely=0.75, relwidth=0.8, relheight=0.2)
-pAnonim = Button(klatkaAnon, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1], command=zmiana_okna_LC).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
+pAnonim = Button(klatkaAnon, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1], command=anonymus_join(nick)).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
 
-err_login = Label(klatkaAnon, text=f"tutaj wstaw jaki to error->{None}", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
+err_login = Label(klatkaAnon, text="", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
 
 
 
@@ -291,7 +291,7 @@ plogowanie1.place(relx=0.1, rely=0.9, relwidth=0.8, relheight=0.2)
 login.place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
 haslo.place(relx=0.1, rely=0.6, relwidth=0.8, relheight=0.2)
 
-err1_login = Label(klatkaLogowanie, text=f"tutaj wstaw jaki to error->{None}", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
+err1_login = Label(klatkaLogowanie, text="", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
 
 
 for i in range(0, len(root.messages)):
