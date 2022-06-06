@@ -21,7 +21,7 @@ def messages_thread(root):
 
 
 def get_messages():
-    messages = get(HOST+'chat.json').json()
+    messages = get(HOST+'chats.json').json()
     print(messages)
 
 
