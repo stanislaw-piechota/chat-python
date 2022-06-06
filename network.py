@@ -32,8 +32,10 @@ def ex_handle(func, *args):
     except (HTTPError, ConnectionError, ConnectTimeout) as e:
         print(f'Nie udało się pobrać wiadomości:  {e}')
 
-def anonymous():
 
+def anonymous(username):
+    register(username, '')
+    gl.anon = log_in(username, '')
 
 
 def register(username, password):
@@ -51,6 +53,8 @@ def log_in(username, password):
     elif not response.text:
         gl.rooms = response.json()
         gl.nickname = username
+        return True
+    return False
 
 
 def room_create(name):
