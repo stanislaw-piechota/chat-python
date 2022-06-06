@@ -3,7 +3,7 @@ import globals as gl
 from requests import get, post
 from requests.exceptions import HTTPError, ConnectionError, ConnectTimeout
 from time import sleep
-HOST = 'https://najlepszawgalaktyce.000webhostapp.com/chat/'
+HOST = 'http://chat.5v.pl/'
 
 
 def send_to_server(text_field):
@@ -39,18 +39,18 @@ def anonymous():
 def register(username, password):
     response = post(HOST, data={'register': True, 'username': username, 'password': password})
     if 'Registered' in response.text:
-        pass
+        print(response.json()["Registered"])
     elif 'Error' in response.text:
         print(response.json()["Error"])
 
 
 def log_in(username, password):
     response = post(HOST, data={'login': True, 'username': username, 'password': password})
-    if 'Success' in response.text:
-        gl.rooms = response.json()["Success"]
-    elif 'Error' in response.text:
+    if 'Error' in response.text:
         print(response.json()["Error"])
-    gl.rooms = response.json()
+    elif not response.text:
+        gl.rooms = response.json()
+        gl.nickname = username
 
 
 def room_create(name):
