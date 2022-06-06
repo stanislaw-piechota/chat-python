@@ -1,7 +1,7 @@
 greeting = """
-To jest początek nowego pokoju. Miło nam, że tu jesteś :)
-Czat jest publiczny, dlatego pamiętaj, aby zachowywać się odpowiedzialnie.
-Pod żadnym pozorem nie podawaj swoich wrażliwych danych!
+To jest początek nowego pokoju. Miło nam, że tu jesteś :)\n
+Czat jest publiczny, dlatego pamiętaj, aby zachowywać się odpowiedzialnie.\n
+Pod żadnym pozorem nie podawaj swoich wrażliwych danych.\n\n
 
 Україна, ми з вами!
 """
