@@ -17,7 +17,7 @@ def send_to_server(text_field):
 
 def messages_thread(root):
     while root.message_get:
-        ex_handle(get_messages(gl.room))
+        root.messages = ex_handle(get_messages, gl.room)
         sleep(2)
 
 
