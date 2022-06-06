@@ -79,19 +79,34 @@ def room_create(name):
         return None
     response = get(HOST, params={'create': True, 'name': name})
     if 'Success' in response.text:
-        room_join(gl.nickname, name)
+        return room_join(gl.nickname, name)
     elif 'Error' in response.text:
         return response.json()["Error"]
 
 
-def convo_join(username1, username2, room):
-    if not room:
+def convo_join(username1, username2):
+    if not username1 or not username2:
         return None
-    response = get(HOST, params={'join': True, 'username': (username1 + '#' + username2), 'room': room, 'type': "private"})
-    if 'Success' in response.text:
-        gl.rooms.append(room)
-        gl.room = room
+    name1 = username1 + '#' + username2
+    name2 = username2 + '#' + username1
+    if name1 in gl.rooms:
+        gl.room = name1
         return True
+    if name2 in gl.rooms:
+        gl.room = name2
+        return True
+    response = get(HOST, params={'create': True, 'name': name1, 'type': "private"})
+    if 'Success' in response.text:
+        resp1 = get(HOST, params={'join': True, 'username': username1, 'name': name1, 'type': "private"})
+        resp2 = get(HOST, params={'join': True, 'username': username2, 'name': name1, 'type': "private"})
+        if 'Success' in resp1.text and 'Success' in resp2.text:
+            gl.rooms.append(name1)
+            gl.room = name1
+            return True
+        elif 'Error' in resp1.text:
+            return resp1.json()["Error"]
+        elif 'Error' in resp2.text:
+            return resp2.json()["Error"]
     elif 'Error' in response.text:
         return response.json()["Error"]
 

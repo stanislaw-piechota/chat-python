@@ -5,6 +5,7 @@ from threading import Thread
 
 import appbar as ab
 import functions as f
+import globals as gl
 import users
 import network as net
 from texts import greeting
@@ -14,6 +15,60 @@ CL = ab.CL
 root = Tk()
 root.messages = []
 ab.config_window(root)
+
+
+def anonymus_join(entry):
+    resp = net.anonymous(entry.get())
+    if resp == True:
+        entry.delete(0, END)
+        zmiana_okna_LC()
+    else:
+        err_login['text'] = resp
+
+
+def register(entry1, entry2):
+    resp = net.register(entry1.get(), entry2.get())
+    if resp == True:
+        entry1.delete(0, END)
+        entry2.delete(0, END)
+        zmiana_okna_LC()
+    else:
+        err_login['text'] = resp
+
+
+def login(entry1, entry2):
+    resp = net.log_in(entry1.get(), entry2.get())
+    if resp == True:
+        entry1.delete(0, END)
+        entry2.delete(0, END)
+        zmiana_okna_LC()
+    else:
+        err_login['text'] = resp
+
+
+def convo_join(username):
+    resp = net.convo_join(gl.nickname, username)
+    if resp != True:
+        err_login['text'] = resp
+
+
+def room_join(entry):
+    resp = net.room_join(gl.nickname, entry.get())
+    if resp == True:
+        entry.delete(0, END)
+    else:
+        err_login['text'] = resp
+
+
+def leave(name):
+    resp = net.room_leave(gl.nickname, name)
+    if resp != True:
+        err_login['text'] = resp
+
+
+def switch(name):
+    if name in gl.rooms:
+        gl.room = name
 
 
 def new_Room():
@@ -222,6 +277,6 @@ pRejestracja.place(relx=0.1, rely=0.5, relwidth=0.8, relheight=0.2)
 pLogin = Button(klatka, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=zmiana_okna_LC).place(relx=0.1, rely=0.75, relwidth=0.8, relheight=0.2)
 pAnonim = Button(klatka, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1]).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
 
-err_login = Label(klatka, text=f"tutaj wstaw jaki to error->{None}", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.25, relwidth=0.8, relheight=0.2)
+err_login = Label(klatka, text="", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.25, relwidth=0.8, relheight=0.2)
 
 root.mainloop()
