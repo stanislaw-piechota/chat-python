@@ -17,13 +17,18 @@ def send_to_server(text_field):
 
 def messages_thread(root):
     while root.message_get:
-        ex_handle(get_messages)
+        ex_handle(get_messages(gl.room))
         sleep(2)
 
 
-def get_messages():
-    messages = get(HOST+'chats.json').json()
-    print(messages)
+def get_messages(room):
+    response = post(HOST, data={'read': True, 'room': room})
+    all_messages = response.json()
+    messages = []
+    while gl.m_id < len(all_messages):
+        messages.append(all_messages[gl.m_id])
+        gl.m_id += 1
+    return messages
 
 
 def ex_handle(func, *args):
@@ -36,12 +41,13 @@ def ex_handle(func, *args):
 def anonymous(username):
     if not username:
         return None
+    gl.anon = True
     register(username, '')
     gl.anon = log_in(username, '')
 
 
 def register(username, password):
-    if not username:
+    if not username or (not password and not gl.anon):
         return None
     response = post(HOST, data={'register': True, 'username': username, 'password': password})
     if 'Registered' in response.text:
@@ -51,7 +57,7 @@ def register(username, password):
 
 
 def log_in(username, password):
-    if not username:
+    if not username or (not password and not gl.anon):
         return None
     response = post(HOST, data={'login': True, 'username': username, 'password': password})
     if 'Error' in response.text:
@@ -79,6 +85,7 @@ def room_join(username, room):
     if 'Success' in response.text:
         gl.rooms.append(room)
         gl.room = room
+        return True
     elif 'Error' in response.text:
         return response.json()["Error"]
 
