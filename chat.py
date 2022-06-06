@@ -64,8 +64,13 @@ users_nav = Frame(main_screen, bg=CL[2])
 users_nav.place(relx=0.85, rely=0, relwidth=0.15, relheight=1)
 
 chat_frame = Frame(main_screen, bg=CL[3])
-greeting_label = Label(chat_frame, font=f.ft(10), bg=CL[3], fg=CL[0], text=greeting, justify=CENTER)
-greeting_label.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+sb = Scrollbar(chat_frame, orient=VERTICAL)
+sb.pack(side=RIGHT, fill=Y)
+message_list = Listbox(chat_frame, bg=CL[3], bd=0, highlightthickness=0, fg=CL[0])
+# greeting_label = Label(message_frame, font=f.ft(10), bg=CL[3], fg=CL[0], text=greeting, justify=CENTER)
+# greeting_label.place(relx=0, rely=0, relwidth=1, relheight=0.15)
+message_list.insert(0, greeting)
+message_list.place(relx=0.05, relwidth=0.9, rely=0.025, relheight=0.85)
 text_field = Entry(chat_frame, font=f.ft(12), bg=CL[1], fg='white', bd=0)
 text_field.place(relx=0.05, rely=0.9, relwidth=0.75, relheight=0.05)
 send_button = Button(chat_frame, bg=CL[0], fg=CL[1], text='⏵', font=f.ft(15), bd=0, command=partial(net.send_to_server,
@@ -81,18 +86,20 @@ users_button.place(relx=0.86, rely=0.02, relwidth=0.13, relheight=0.06)
 
 
 # binding enter to message sending
-root.bind('<Return>', lambda event: net.ex_handle(net.send_to_server, (text_field, )))
+root.bind('<Return>', lambda event: net.ex_handle(net.send_to_server, text_field))
 messages_thread = Thread(target=net.messages_thread, args=(root, ))
 messages_thread.start()
 
 
 # resizing widgets
 resize_x_widget = Frame(main_frame, bg=CL[3], cursor='sb_h_double_arrow')
-resize_x_widget.pack(side=RIGHT, ipadx=2, fill=Y)
+resize_x_widget.pack(side=RIGHT, ipadx=1, fill=Y)
 resize_x_widget.bind("<B1-Motion>", partial(ab.resize_x, root))
-Frame(main_frame, bg=CL[3]).pack(side=LEFT, ipadx=2, fill=Y)  # symmetry
+Frame(main_frame, bg=CL[3]).pack(side=LEFT, ipadx=1, fill=Y)  # symmetry
 resize_y_widget = Frame(main_frame, bg=CL[3], cursor='sb_v_double_arrow')
-resize_y_widget.pack(side=BOTTOM, ipady=2, fill=X)
+resize_y_widget.pack(side=BOTTOM, ipady=1, fill=X)
 resize_y_widget.bind("<B1-Motion>", partial(ab.resize_y, root))
+
+# root.children['!frame2'].children['!frame2'].config(bg=CL[1])
 
 root.mainloop()

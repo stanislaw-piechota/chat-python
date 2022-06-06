@@ -22,7 +22,7 @@ def messages_thread(root):
             gl.users = post(HOST, data={'users': True, 'room': "test"}).json()
         sleep(2)
 
-
+        
 def get_messages(room):
     response = post(HOST, data={'read': True, 'room': room})
     all_messages = response.json()
@@ -32,7 +32,7 @@ def get_messages(room):
         gl.m_id += 1
     return messages
 
-
+  
 def ex_handle(func, *args):
     try:
         return func(*args)
