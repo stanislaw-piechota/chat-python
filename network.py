@@ -2,7 +2,7 @@ import messages as ms
 from requests import get, post
 from requests.exceptions import HTTPError, ConnectionError, ConnectTimeout
 from time import sleep
-HOST = 'https://najlepszawgalaktyce.000webhostapp.com/chat/'
+HOST = 'http://chat.5v.pl/'
 
 
 def send_to_server(text_field):
