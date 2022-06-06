@@ -15,11 +15,31 @@ root = Tk()
 root.messages = []
 ab.config_window(root)
 
+def Logowanie():
+    klatkaAnon.place_forget()
+    klatkaLogowanie.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
+
+
+def backRA():
+    klatkaRejestracja.place_forget()
+    klatkaAnon.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
+
+def backLA():
+    klatkaLogowanie.place_forget()
+    klatkaAnon.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
+
+
+def new_acc():
+    pass
+def register():
+    klatkaAnon.place_forget()
+    klatkaRejestracja.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
+
 
 def new_Room():
     top = Toplevel(bg=CL[3])
     ab.config_window(top)
-    top.geometry("300x300")
+    top.geometry("300x300+350+350")
 
     # main frames
     title_barT = Frame(top, bg=CL[0], relief='raised', bd=0, highlightthickness=0)
@@ -61,7 +81,7 @@ def new_Room():
 def join_Room():
     top = Toplevel(bg=CL[3])
     ab.config_window(top)
-    top.geometry("300x300")
+    top.geometry("300x300+350+350")
 
     # main frames
     title_barT = Frame(top, bg=CL[0], relief='raised', bd=0, highlightthickness=0)
@@ -104,10 +124,10 @@ def zmiana_okna_LC():
     main_screen.place(x=0, y=0, relwidth=1, relheight=1)
     chat_frame.place(relx=0.2, rely=0, relwidth=0.65, relheight=1)
 
-    klatka.destroy()
+    klatkaAnon.place_forget()
 
-def logowanie_anonimowe():
-    pass
+# def logowanie_anonimowe():
+#     pass
 
 
 # main frames
@@ -157,40 +177,45 @@ users_nav = Frame(main_screen, bg=CL[2])
 
 chat_frame = Frame(main_screen, bg=CL[3])
 #scrollbar
-my_canvas = Canvas(chat_frame, bg=CL[3])
-my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
-
-scrollbar=ttk.Scrollbar(chat_frame, orient=VERTICAL, command=my_canvas.yview)
-scrollbar.pack(side=RIGHT, fill=Y)
-
-my_canvas.configure(yscrollcommand=scrollbar.set)
-my_canvas.bind('<Configure>', lambda e: my_canvas.configure(scrollregion= my_canvas.bbox("all")))
-
-secFrame= Frame(my_canvas, bg=CL[3])
-
-my_canvas.create_window((0,0), window=secFrame, anchor="nw")
-secFrame.place(relx=0, relwidth=1, rely=0, relheight=1)
+# my_canvas = Canvas(chat_frame, bg=CL[3])
+# my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
+text = Text(chat_frame, height=10,bg=CL[2], fg=CL[0], font=f.ft(10), padx=100)
+text.grid(row=0, column=0, sticky=EW)
+scrollbar=Scrollbar(chat_frame, orient=VERTICAL, command=text.yview)
+scrollbar.place(relx=0.98, rely=0.02, relwidth=0.02, relheight=1)
+text['yscrollcommand'] =scrollbar.set
 
 
-greeting_label = Label(secFrame, font=f.ft(10), bg=CL[3], fg=CL[0], text=greeting, justify=CENTER)
-text_field = Entry(secFrame, font=f.ft(12), bg=CL[1], fg='white', bd=0)
-send_button = Button(secFrame, bg=CL[0], fg=CL[1], text='⏵', font=f.ft(15), bd=0, command=partial(net.send_to_server,
+# scrollbar.pack(side=RIGHT, fill=Y)
+#
+# my_canvas.configure(yscrollcommand=scrollbar.set)
+# my_canvas.bind('<Configure>', lambda e: my_canvas.configure(scrollregion= my_canvas.bbox("all")))
+#
+# secFrame= Frame(my_canvas, bg=CL[3])
+#
+# my_canvas.create_window((0,0), window=secFrame, anchor="nw")
+# secFrame.place(relx=0, relwidth=1, rely=0, relheight=1)
+
+greeting_label = Label(chat_frame, font=f.ft(10), bg=CL[3], fg=CL[0], text=greeting, justify=CENTER)
+text_field = Entry(chat_frame, font=f.ft(12), bg=CL[1], fg='white', bd=0)
+send_button = Button(chat_frame, bg=CL[0], fg=CL[1], text='⏵', font=f.ft(15), bd=0, command=partial(net.send_to_server,
                                                                                                     text_field))
-photo_button = Button(secFrame, bg=CL[0], fg=CL[1], text='+', font=f.ft(15), bd=0)
+photo_button = Button(chat_frame, bg=CL[0], fg=CL[1], text='+', font=f.ft(15), bd=0)
 
 
 users_button = Label(main_screen, bd=0, bg=CL[1], fg=CL[0], text="Członkowie", font=f.ft(12))
-                      # command=partial(users.toggle_nav_visibility, users_nav, secFrame, root))
+                      # command=partial(users.toggle_nav_visibility, users_nav, chat_frame, root))
+
+send_button = Button(chat_frame, bg=CL[0], fg=CL[1], text='⏵', font=f.ft(15), bd=0, command=partial(net.send_to_server,
+                                                                                                    text_field))
+photo_button = Button(chat_frame, bg=CL[0], fg=CL[1], text='+', font=f.ft(15), bd=0)
 
 add_room_button.place(relx=0, rely=0, relwidth=1, relheight=0.05)
 join_room_button.place(relx=0, rely=0.05, relwidth=1, relheight=0.05)
 users_nav.place(relx=0.85, rely=0, relwidth=0.15, relheight=1)
 join_nav.place(x=0, y=0, relwidth=0.2, relheight=1)
 text_field.place(relx=0.05, rely=0.9, relwidth=0.75, relheight=0.05)
-send_button = Button(chat_frame, bg=CL[0], fg=CL[1], text='⏵', font=f.ft(15), bd=0, command=partial(net.send_to_server,
-                                                                                                    text_field))
 send_button.place(relx=0.825, relwidth=0.05, rely=0.9, relheight=0.05)
-photo_button = Button(chat_frame, bg=CL[0], fg=CL[1], text='+', font=f.ft(15), bd=0)
 photo_button.place(relx=0.9, relwidth=0.05, rely=0.9, relheight=0.05)
 greeting_label.place(relx=0, rely=0, relwidth=1, relheight=0.15)
 users_button.place(relx=0.86, rely=0.02, relwidth=0.13, relheight=0.06)
@@ -212,18 +237,68 @@ resize_y_widget.pack(side=BOTTOM, ipady=1, fill=X)
 resize_y_widget.bind("<B1-Motion>", partial(ab.resize_y, root))
 
 
-klatka = LabelFrame(root, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
-klatka.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
-Label(klatka, text="Strona główna", font=f.ft(26), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=-0.4, relwidth=0.8, relheight=0.3)
+klatkaAnon = LabelFrame(root, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
+Label(klatkaAnon, text="Logowanie Anonimowe", font=f.ft(26), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=-0.4, relwidth=0.8, relheight=0.3)
 
-Label(klatka, text="Nick:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0, relwidth=0.8, relheight=0.2)
-login = Entry(klatka, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center').place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
+Label(klatkaAnon, text="Nick:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0, relwidth=0.8, relheight=0.2)
+nick = Entry(klatkaAnon, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center').place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
 
-pRejestracja = Button(klatka, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1])
+pRejestracja = Button(klatkaAnon, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=register)
 pRejestracja.place(relx=0.1, rely=0.5, relwidth=0.8, relheight=0.2)
-pLogin = Button(klatka, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=zmiana_okna_LC).place(relx=0.1, rely=0.75, relwidth=0.8, relheight=0.2)
-pAnonim = Button(klatka, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1]).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
+pLogin = Button(klatkaAnon, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=Logowanie).place(relx=0.1, rely=0.75, relwidth=0.8, relheight=0.2)
+pAnonim = Button(klatkaAnon, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1], command=zmiana_okna_LC).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
 
-err_login = Label(klatka, text=f"tutaj wstaw jaki to error->{None}", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.25, relwidth=0.8, relheight=0.2)
+err_login = Label(klatkaAnon, text=f"tutaj wstaw jaki to error->{None}", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
+
+
+
+klatkaAnon.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
+
+
+
+
+klatkaRejestracja = LabelFrame(root, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
+Label(klatkaRejestracja, text="Rejestracja", font=f.ft(26), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=-0.4, relwidth=0.8, relheight=0.3)
+
+Label(klatkaRejestracja, text="Login:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0, relwidth=0.8, relheight=0.2)
+login = Entry(klatkaRejestracja, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center')
+
+Label(klatkaRejestracja, text="Hasło:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0.4, relwidth=0.8, relheight=0.2)
+haslo = Entry(klatkaRejestracja, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center')
+
+pRejestracja1 = Button(klatkaRejestracja, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=new_acc)
+pPowrot1 = Button(klatkaRejestracja, text="Wróć do anonimowego logowania", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=backRA)
+pPowrot1.place(relx=0.1, rely=1.2, relwidth=0.8, relheight=0.2)
+pRejestracja1.place(relx=0.1, rely=0.9, relwidth=0.8, relheight=0.2)
+login.place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
+haslo.place(relx=0.1, rely=0.6, relwidth=0.8, relheight=0.2)
+
+
+
+klatkaLogowanie = LabelFrame(root, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
+Label(klatkaLogowanie, text="Logowanie", font=f.ft(26), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=-0.4, relwidth=0.8, relheight=0.3)
+
+Label(klatkaLogowanie, text="Login:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0, relwidth=0.8, relheight=0.2)
+login = Entry(klatkaLogowanie, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center')
+
+Label(klatkaLogowanie, text="Hasło:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0.4, relwidth=0.8, relheight=0.2)
+haslo = Entry(klatkaLogowanie, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center')
+
+plogowanie1 = Button(klatkaLogowanie, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=login)
+pPowrot2 = Button(klatkaLogowanie, text="Wróć do anonimowego logowania", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=backLA)
+pPowrot2.place(relx=0.1, rely=1.2, relwidth=0.8, relheight=0.2)
+plogowanie1.place(relx=0.1, rely=0.9, relwidth=0.8, relheight=0.2)
+login.place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
+haslo.place(relx=0.1, rely=0.6, relwidth=0.8, relheight=0.2)
+
+err1_login = Label(klatkaLogowanie, text=f"tutaj wstaw jaki to error->{None}", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
+
+
+for i in range(0, len(root.messages)):
+    position = f'{i}.0'
+    text.insert(position, root.messages[i])
+
+
+
 
 root.mainloop()
