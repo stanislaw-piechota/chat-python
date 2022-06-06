@@ -132,4 +132,4 @@ slurs = ['chuj', 'chuja', 'chujek', 'chuju', 'chujem', 'chujnia',
          'zjebała', 'zjebala', 'zjebana', 'zjebią', 'zjebali', 'zjeby']
 link_starts = ("https://", "http://", "www.")
 link_ends = (".com", ".pl")
-symbols = [' ', ',', '?', '!', '(', ')', '{', '}', '[', ']', '\\', '*', '#', ';', '\'', '\"']
+symbols = [' ', ',', '?', '!', '(', ')', '{', '}', '[', ']', '\\', '*', '#', ';', '\'', '\"', '-', '+', '=', '&', '^', '@', '%']
