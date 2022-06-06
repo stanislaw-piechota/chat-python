@@ -60,7 +60,7 @@ def log_in(username, password):
 def room_create(name):
     response = get(HOST, params={'create': True, 'name': name})
     if 'Success' in response.text:
-        room_join(gl.username, name)
+        room_join(gl.nickname, name)
     elif 'Error' in response.text:
         print(response.json()["Error"])
 
