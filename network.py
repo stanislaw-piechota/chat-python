@@ -84,10 +84,22 @@ def room_create(name):
         return response.json()["Error"]
 
 
+def convo_join(username1, username2, room):
+    if not room:
+        return None
+    response = get(HOST, params={'join': True, 'username': (username1 + '#' + username2), 'room': room, 'type': "private"})
+    if 'Success' in response.text:
+        gl.rooms.append(room)
+        gl.room = room
+        return True
+    elif 'Error' in response.text:
+        return response.json()["Error"]
+
+
 def room_join(username, room):
     if not room:
         return None
-    response = get(HOST, params={'join': True, 'username': username, 'room': room})
+    response = get(HOST, params={'join': True, 'username': username, 'room': room, 'type': "public"})
     if 'Success' in response.text:
         gl.rooms.append(room)
         gl.room = room
