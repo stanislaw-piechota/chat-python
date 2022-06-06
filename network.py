@@ -17,7 +17,9 @@ def send_to_server(text_field):
 
 def messages_thread(root):
     while root.message_get:
-        root.messages = ex_handle(get_messages, gl.room)
+        if gl.room:
+            root.messages = ex_handle(get_messages, gl.room)
+            gl.users = post(HOST, data={'users': True, 'room': "test"}).json()
         sleep(2)
 
 
