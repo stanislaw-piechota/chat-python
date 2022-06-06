@@ -45,20 +45,16 @@ expand_button.bind('<Leave>', ab.change_normal)
 minimize_button.bind('<Enter>', ab.change_hover)
 minimize_button.bind('<Leave>', ab.change_normal)
 
-klatka = LabelFrame(main_frame,relief=SUNKEN, bd=0, padx=10, pady=10, bg=CL[2])
-klatka.pack(pady=200)
-Label(klatka, text="Main Page",font=f.ft(26), fg=CL[0], bg=CL[2]).grid(row=0,column=0,columnspan=4)
+klatka = LabelFrame(main_frame, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
+klatka.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
+Label(klatka, text="Strona główna", font=f.ft(26), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=-0.4, relwidth=0.8, relheight=0.3)
 
-Label(klatka, text="Nick:",font=f.ft(20), fg=CL[0], bg=CL[2]).grid(row=2,column=0,sticky=W,columnspan=4)
-login = Entry(klatka, width=25, font=f.ft(16), bg=CL[4]).grid(row=3, column=0,columnspan=4)
+Label(klatka, text="Nick:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0, relwidth=0.8, relheight=0.2)
+login = Entry(klatka, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center').place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
 
-
-pRejestracja = Button(klatka, text="Register here",font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1]).grid(row=6, column=0, pady=10, sticky=W)
-pLogin = Button(klatka, text="Login here", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1]).grid(row=6, column=3, pady=10, sticky=E)
-
-
-
-
-
+pRejestracja = Button(klatka, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1])
+pRejestracja.place(relx=0.1, rely=0.5, relwidth=0.8, relheight=0.2)
+pLogin = Button(klatka, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1]).place(relx=0.1, rely=0.75, relwidth=0.8, relheight=0.2)
+pAnonim = Button(klatka, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1]).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
 
 root.mainloop()
