@@ -45,7 +45,9 @@ expand_button.bind('<Leave>', ab.change_normal)
 minimize_button.bind('<Enter>', ab.change_hover)
 minimize_button.bind('<Leave>', ab.change_normal)
 
-klatka = LabelFrame(main_frame, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
+top = Toplevel()
+
+klatka = LabelFrame(top, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
 klatka.place(relx=0.25, rely=0.25, relwidth=0.5, relheight=0.5)
 Label(klatka, text="Strona główna", font=f.ft(26), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=-0.4, relwidth=0.8, relheight=0.3)
 
