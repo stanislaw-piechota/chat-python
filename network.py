@@ -10,7 +10,7 @@ def send_to_server(text_field):
     corrected_message = ms.message_check(text_field)
     if not corrected_message:
         return
-    response = post(HOST, data={'send': True, 'text': corrected_message})
+    response = post(HOST, data={'send': True, 'text': corrected_message, 'type': "text", 'room': gl.room})
     if 'Error' in response.text:
         raise HTTPError
 
@@ -32,7 +32,7 @@ def get_messages(room):
         gl.m_id += 1
     return messages
 
-  
+
 def ex_handle(func, *args):
     try:
         return func(*args)
@@ -43,9 +43,13 @@ def ex_handle(func, *args):
 def anonymous(username):
     if not username:
         return None
-    gl.anon = True
-    register(username, '')
-    gl.anon = log_in(username, '')
+    resp1 = register(username, '')
+    if resp1 == True:
+        resp2 = gl.anon = log_in(username, '')
+        if resp2 == True:
+            gl.anon = True
+        return resp2
+    return resp1
 
 
 def register(username, password):

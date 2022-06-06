@@ -58,6 +58,7 @@ def new_Room():
 
     err = Label(top, text=f"", font=f.ft(12), fg=CL[0], bg=CL[3]).place(relx=0.1, rely=0.8, relwidth=0.8, relheight=0.05)
 
+
 def join_Room():
     top = Toplevel(bg=CL[3])
     ab.config_window(top)
@@ -105,9 +106,6 @@ def zmiana_okna_LC():
     chat_frame.place(relx=0.2, rely=0, relwidth=0.65, relheight=1)
 
     klatka.destroy()
-
-def logowanie_anonimowe():
-    pass
 
 
 # main frames
