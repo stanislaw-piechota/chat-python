@@ -144,7 +144,7 @@ minimize_button.bind('<Leave>', ab.change_normal)
 
 # chat screen widgets
 main_screen = Frame(main_frame, bg=CL[3])
-main_screen.place(x=0, y=0, relwidth=1, relheight=1)
+# main_screen.place(x=0, y=0, relwidth=1, relheight=1)
 
 join_nav = Frame(main_screen, bg=CL[1])
 add_room_button = Button(join_nav, bd=0, bg=CL[1], fg=CL[0], text="Utwórz pokój", font=f.ft(12), command=new_Room)
@@ -197,7 +197,7 @@ users_button.place(relx=0.86, rely=0.02, relwidth=0.13, relheight=0.06)
 
 
 # binding enter to message sending
-root.bind('<Return>', lambda event: net.ex_handle(net.send_to_server, (text_field, )))
+root.bind('<Return>', lambda event: net.ex_handle(net.send_to_server, text_field))
 messages_thread = Thread(target=net.messages_thread, args=(root, ))
 messages_thread.start()
 
