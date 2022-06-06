@@ -34,41 +34,61 @@ def ex_handle(func, *args):
 
 
 def anonymous(username):
+    if not username:
+        return None
     register(username, '')
     gl.anon = log_in(username, '')
 
 
 def register(username, password):
+    if not username:
+        return None
     response = post(HOST, data={'register': True, 'username': username, 'password': password})
     if 'Registered' in response.text:
-        print(response.json()["Registered"])
+        return True
     elif 'Error' in response.text:
-        print(response.json()["Error"])
+        return response.json()["Error"]
 
 
 def log_in(username, password):
+    if not username:
+        return None
     response = post(HOST, data={'login': True, 'username': username, 'password': password})
     if 'Error' in response.text:
-        print(response.json()["Error"])
+        return response.json()["Error"]
     elif not response.text:
         gl.rooms = response.json()
         gl.nickname = username
         return True
-    return False
 
 
 def room_create(name):
+    if not name:
+        return None
     response = get(HOST, params={'create': True, 'name': name})
     if 'Success' in response.text:
         room_join(gl.nickname, name)
     elif 'Error' in response.text:
-        print(response.json()["Error"])
+        return response.json()["Error"]
 
 
 def room_join(username, room):
+    if not room:
+        return None
     response = get(HOST, params={'join': True, 'username': username, 'room': room})
     if 'Success' in response.text:
         gl.rooms.append(room)
         gl.room = room
     elif 'Error' in response.text:
-        print(response.json()["Error"])
+        return response.json()["Error"]
+
+
+def room_leave(username, room):
+    if not room:
+        return None
+    response = get(HOST, params={'leave': True, 'username': username, 'room': room})
+    if 'Success' in response.text:
+        gl.rooms.remove(room)
+        gl.room = ''
+    elif 'Error' in response.text:
+        return response.json()["Error"]
