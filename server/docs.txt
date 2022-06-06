@@ -1,4 +1,4 @@
-host: https://najlepszawgalaktyce.000webhostapp.com/chat
+host: https://chat.5v.pl/
 
 1. Upload message, POST
    .../
