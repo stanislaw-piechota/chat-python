@@ -10,7 +10,9 @@ def send_to_server(text_field):
     corrected_message = ms.message_check(text_field)
     if not corrected_message:
         return
-    response = post(HOST, data={'send': True, 'text': corrected_message, 'type': "text", 'room': gl.room})
+    print(corrected_message, gl.room, gl.nickname)
+    response = post(HOST, data={'send': True, 'text': corrected_message, 'type': "text", 'room': gl.room, 'username': gl.nickname})
+    print('resp: '+response.text)
     if 'Error' in response.text:
         raise HTTPError
 
@@ -19,6 +21,13 @@ def messages_thread(root):
     while root.message_get:
         if gl.room:
             root.messages = ex_handle(get_messages, gl.room)
+            for mess in root.messages:
+                print(mess)
+                root.text.config(state='normal')
+                root.text.insert(str(mess['ID']*3-2)+".0", f"{mess['author']}  {mess['time']['day']}.\
+{mess['time']['month']}.{mess['time']['year']} {mess['time']['hour']}:{mess['time']['minute']}\n")
+                root.text.insert(str(mess['ID']*3-1)+'.0', mess['message']+'\n\n')
+                root.text.config(state='disabled')
             gl.users = post(HOST, data={'users': True, 'room': "test"}).json()
         sleep(2)
 
@@ -43,12 +52,10 @@ def ex_handle(func, *args):
 def anonymous(username):
     if not username:
         return None
+    gl.anon = True
     resp1 = register(username, '')
     if resp1 == True:
-        resp2 = gl.anon = log_in(username, '')
-        if resp2 == True:
-            gl.anon = True
-        return resp2
+        gl.nickname = username
     return resp1
 
 
@@ -56,14 +63,14 @@ def register(username, password):
     if not username or (not password and not gl.anon):
         return None
     response = post(HOST, data={'register': True, 'username': username, 'password': password})
-    if 'Registered' in response.text:
+    if 'Success' in response.text:
         return True
     elif 'Error' in response.text:
         return response.json()["Error"]
 
 
 def log_in(username, password):
-    if not username or (not password and not gl.anon):
+    if not username or not password:
         return None
     response = post(HOST, data={'login': True, 'username': username, 'password': password})
     if 'Error' in response.text:

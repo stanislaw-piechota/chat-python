@@ -39,6 +39,8 @@ def register():
 
 def anonymus_join(entry):
     resp = net.anonymous(entry.get())
+    print(resp)
+    print(resp == True)
     if resp == True:
         entry.delete(0, END)
         zmiana_okna_LC()
@@ -46,14 +48,14 @@ def anonymus_join(entry):
         err_login['text'] = resp
 
 
-def register(entry1, entry2):
+def reg(entry1, entry2):
     resp = net.register(entry1.get(), entry2.get())
     if resp == True:
         entry1.delete(0, END)
         entry2.delete(0, END)
         zmiana_okna_LC()
     else:
-        err_login['text'] = resp
+        print(resp)
 
 
 def login(entry1, entry2):
@@ -63,13 +65,13 @@ def login(entry1, entry2):
         entry2.delete(0, END)
         zmiana_okna_LC()
     else:
-        err_login['text'] = resp
+        print(resp)
 
 
 def convo_join(username):
     resp = net.convo_join(gl.nickname, username)
     if resp != True:
-        err_login['text'] = resp
+        print(resp)
 
 
 def room_join(entry):
@@ -77,13 +79,13 @@ def room_join(entry):
     if resp == True:
         entry.delete(0, END)
     else:
-        err_login['text'] = resp
+        print(resp)
 
 
 def leave(name):
     resp = net.room_leave(gl.nickname, name)
     if resp != True:
-        err_login['text'] = resp
+        print(resp)
 
 
 def switch(name):
@@ -232,8 +234,9 @@ chat_frame = Frame(main_screen, bg=CL[3])
 #scrollbar
 # my_canvas = Canvas(chat_frame, bg=CL[3])
 # my_canvas.pack(side=LEFT, fill=BOTH, expand=1)
-text = Text(chat_frame, height=10,bg=CL[2], fg=CL[0], font=f.ft(10), padx=100)
-text.grid(row=0, column=0, sticky=EW)
+text = Text(chat_frame, height=10, bg=CL[3], fg=CL[0], font=f.ft(10), padx=100, bd=0, state='disabled')
+root.text = text
+text.place(relx=0, rely=0.2, relwidth=1, relheight=0.6)
 scrollbar=Scrollbar(chat_frame, orient=VERTICAL, command=text.yview)
 scrollbar.place(relx=0.98, rely=0.02, relwidth=0.02, relheight=1)
 text['yscrollcommand'] =scrollbar.set
@@ -294,14 +297,16 @@ klatkaAnon = LabelFrame(root, relief=SUNKEN, bd=0, padx=100, pady=100, bg=CL[2])
 Label(klatkaAnon, text="Logowanie Anonimowe", font=f.ft(26), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=-0.4, relwidth=0.8, relheight=0.3)
 
 Label(klatkaAnon, text="Nick:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0, relwidth=0.8, relheight=0.2)
-nick = Entry(klatkaAnon, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center').place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
+nick = Entry(klatkaAnon, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center')
+nick.place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
 
 pRejestracja = Button(klatkaAnon, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=register)
 pRejestracja.place(relx=0.1, rely=0.5, relwidth=0.8, relheight=0.2)
 pLogin = Button(klatkaAnon, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=Logowanie).place(relx=0.1, rely=0.75, relwidth=0.8, relheight=0.2)
-pAnonim = Button(klatkaAnon, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1], command=anonymus_join(nick)).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
+pAnonim = Button(klatkaAnon, text="Dołącz anonimowo", font=f.ft(12), bg=CL[0], padx=80,pady=2, bd=0, fg=CL[1], command=lambda:anonymus_join(nick)).place(relx=0.1, rely=1, relwidth=0.8, relheight=0.2)
 
-err_login = Label(klatkaAnon, text="", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
+err_login = Label(klatkaAnon, text="", font=f.ft(12), fg=CL[0], bg=CL[2])
+err_login.place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
 
 
 
@@ -319,7 +324,7 @@ login = Entry(klatkaRejestracja, width=25, font=f.ft(16), bg=CL[4], bd=0, justif
 Label(klatkaRejestracja, text="Hasło:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0.4, relwidth=0.8, relheight=0.2)
 haslo = Entry(klatkaRejestracja, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center')
 
-pRejestracja1 = Button(klatkaRejestracja, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=new_acc)
+pRejestracja1 = Button(klatkaRejestracja, text="Zarejestruj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=lambda: reg(login, haslo))
 pPowrot1 = Button(klatkaRejestracja, text="Wróć do anonimowego logowania", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=backRA)
 pPowrot1.place(relx=0.1, rely=1.2, relwidth=0.8, relheight=0.2)
 pRejestracja1.place(relx=0.1, rely=0.9, relwidth=0.8, relheight=0.2)
@@ -337,7 +342,7 @@ login = Entry(klatkaLogowanie, width=25, font=f.ft(16), bg=CL[4], bd=0, justify=
 Label(klatkaLogowanie, text="Hasło:", font=f.ft(20), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=0.4, relwidth=0.8, relheight=0.2)
 haslo = Entry(klatkaLogowanie, width=25, font=f.ft(16), bg=CL[4], bd=0, justify='center')
 
-plogowanie1 = Button(klatkaLogowanie, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=login)
+plogowanie1 = Button(klatkaLogowanie, text="Zaloguj się", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=None)
 pPowrot2 = Button(klatkaLogowanie, text="Wróć do anonimowego logowania", font=f.ft(12), bg=CL[0], padx=2,pady=2, bd=0, fg=CL[1], command=backLA)
 pPowrot2.place(relx=0.1, rely=1.2, relwidth=0.8, relheight=0.2)
 plogowanie1.place(relx=0.1, rely=0.9, relwidth=0.8, relheight=0.2)
@@ -345,13 +350,5 @@ login.place(relx=0.1, rely=0.2, relwidth=0.8, relheight=0.2)
 haslo.place(relx=0.1, rely=0.6, relwidth=0.8, relheight=0.2)
 
 err1_login = Label(klatkaLogowanie, text="", font=f.ft(12), fg=CL[0], bg=CL[2]).place(relx=0.1, rely=1.45, relwidth=0.8, relheight=0.2)
-
-
-for i in range(0, len(root.messages)):
-    position = f'{i}.0'
-    text.insert(position, root.messages[i])
-
-
-
 
 root.mainloop()
